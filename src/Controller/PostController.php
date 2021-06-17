@@ -27,8 +27,8 @@ class PostController extends AbstractController
             'bg_image' => 'clean/assets/img/post-bg.jpg',
             'id' => $id,
             'post' => [
-                'title' => 'Symfony est le meilleur framework !',
-                'description' => 'Hundreds of carefully written documentation pages covering all Symfony features exist and they are FREE and open-source licensed!',
+                'title' => 'I love Symfony !',
+                'description' => 'Symfony features exist and they are FREE and open-source licensed!',
                 'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum enim lectus, a cursus lacus imperdiet ac. Etiam lorem est, facilisis sed justo sed, consectetur volutpat sapien. Quisque non venenatis tortor. Fusce eu orci ipsum. Suspendisse at dapibus nisl. Donec lacinia ligula a faucibus rhoncus. Nullam in sodales purus, consectetur finibus est. Duis sollicitudin dapibus risus, a pellentesque sapien accumsan ut. Morbi porta scelerisque dolor, eget imperdiet velit malesuada et. Quisque rhoncus posuere libero id vehicula. Fusce vel malesuada massa, eget ullamcorper nisl. Suspendisse maximus venenatis sem.'
             ]
         ]);
