@@ -1,6 +1,8 @@
 {% extends 'clean.html.twig' %}
 
 {% block title %}Hello PostController!{% endblock %}
+{% block headerTitle %}{{ post.title }}{% endblock %}
+{% block subHeaderTitle %}{{ post.description }}{% endblock %}
 
 {% block body %}
 
