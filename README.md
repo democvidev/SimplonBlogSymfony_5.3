@@ -1,6 +1,6 @@
 # SimplonBlogSymfony_5.3
 
-Mon premier projet Symfony chez Simplon
+Mon second projet Symfony chez Simplon
 
 ## Installation
 
@@ -8,7 +8,7 @@ Allez dans votre répertoire préféré
 
 ```bash
 git clone https://github.com/democvidev/SimplonBlogSymfony_5.3.git
-cd AwesomeProjectSymfony
+cd SimplonBlogSymfony_5.3
 composer install
 ```
 Changez le nom fu fichier ".env copy" en ".env"
