@@ -25,16 +25,28 @@ class PostFormType extends AbstractType
             ])
             // ->add('slug')
             ->add('content', TextareaType::class, [
-                'label' => 'Content'
+                'label' => 'Content',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
-            ->add('image', TextType::class, [])
+            ->add('image', TextType::class, [
+                'label' => 'Image',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             // ->add('createdAt')
             // ->add('active')
             // ->add('user')
             ->add('category', EntityType::class, [
-                'class' => Category::class
+                'class' => Category::class,
+                'label' => 'Categories',
+                'attr' => [
+                    'class' => 'form-select'
+                ]
             ])
-            ->add('Send', SubmitType::class)
+            // ->add('Send', SubmitType::class)
         ;
     }
 
