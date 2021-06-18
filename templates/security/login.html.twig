@@ -22,6 +22,7 @@
 						{% endif %}
 
 						<h1 class="h1 mb-3 font-weight-normal">Please sign in</h1>
+                        <h6><a href="{{ path('app_forgot_password_request') }}">Forgot your password ?</a></h6>
 						<div class="form-group">
 							<label for="inputEmail">Email</label>
 							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required>
