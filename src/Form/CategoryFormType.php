@@ -15,14 +15,14 @@ class CategoryFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                "label" => "Nom de la catégorie",
+                "label" => "Category name",
                 "attr" => [
                     "class" => "form-control"
                 ]
             ])
             // ->add('slug')
             // ->add('parent')
-            ->add('Valider', SubmitType::class)
+            // ->add('Send', SubmitType::class)
         ;
     }
 

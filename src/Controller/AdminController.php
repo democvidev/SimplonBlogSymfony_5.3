@@ -19,9 +19,7 @@ class AdminController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        return $this->render('admin/index.html.twig', []);
     }
 
     /**
@@ -33,14 +31,14 @@ class AdminController extends AbstractController
         $form = $this->createForm(CategoryFormType::class, $category);
 
         $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
-        $em->flush();
-        return $this->redirectToRoute('admin_home');
-    }
-    return $this->render('admin/category/add.html.twig', [
-        'form' => $form->createView(),
-    ]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/category/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

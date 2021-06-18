@@ -1,4 +1,4 @@
-{% extends 'clean.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
 {% block title %}Add category
 {% endblock %}
@@ -9,9 +9,14 @@
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<h1>Add category</h1>
-					{{ form(form) }}
+					{{ form_start(form) }}
+					{{ form_row(form.name) }}
+					<div class="d-flex justify-content-end">
+						<button type="submit" class="btn btn-lg btn-success">Send</button>
 					</div>
+					{{ form_end(form) }}
 				</div>
 			</div>
-		</main>
-	{% endblock %}
+		</div>
+	</main>
+{% endblock %}
