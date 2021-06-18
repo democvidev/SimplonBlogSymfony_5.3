@@ -14,18 +14,18 @@
 					{{ form_row(form.title) }}
 					{{ form_row(form.content) }}
 					{{ form_row(form.image) }}
-                    <div class="d-flex justify-content-between">
-                    <div class="col-md-5 col-lg-7">
-					{{ form_row(form.category) }}
-                    </div>
-                    <p>
-                        <button class="btn btn-lg btn-success">Send</button>
-                    </p>
-                    </div>
-                    
-					{{ form_end(form) }}
+					<div class="d-flex justify-content-between">
+						<div class="col-md-5 col-lg-7">
+							{{ form_row(form.category) }}
+						</div>
+						<p>
+							<button class="btn btn-lg btn-success">Send</button>
+						</p>
 					</div>
+
+					{{ form_end(form) }}
 				</div>
 			</div>
-		</main>
-	{% endblock %}
+		</div>
+	</main>
+{% endblock %}

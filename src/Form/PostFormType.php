@@ -20,34 +20,37 @@ class PostFormType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Title',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             // ->add('slug')
             ->add('content', TextareaType::class, [
                 'label' => 'Content',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('image', TextType::class, [
                 'label' => 'Image',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             // ->add('createdAt')
             // ->add('active')
             // ->add('user')
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'label' => 'Categories',
-                'attr' => [
-                    'class' => 'form-select'
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'class' => Category::class,
+                    'label' => 'Categories',
+                    'attr' => [
+                        'class' => 'form-select',
+                    ],
                 ]
-            ])
-            // ->add('Send', SubmitType::class)
-        ;
+                // ->add('Send', SubmitType::class)
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
