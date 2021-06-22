@@ -33,9 +33,13 @@ class AdminController extends AbstractController
         $form = $this->createForm(CategoryFormType::class, $category);
 
         $form->handleRequest($request);
+        // verifie si on est dans le cas de submit et que les données correspondent aux critères de validation
         if ($form->isSubmitted() && $form->isValid()) {
+            // connexion à l'ORM Doctrine, entityManager
             $em = $this->getDoctrine()->getManager();
+            // fonction intéligente qui decide la requête à faire (SELECT, UPDATE)
             $em->persist($category);
+            // exécution de la requête
             $em->flush();
             return $this->redirectToRoute('admin_home');
         }
