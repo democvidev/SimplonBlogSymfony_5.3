@@ -1,0 +1,31 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Add Post
+{% endblock %}
+
+{% block body %}
+	<!-- Main Content -->
+	<main class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<h1>Add Post</h1>
+					{{ form_start(form) }}
+					{{ form_row(form.title) }}
+					{{ form_row(form.content) }}
+					{{ form_row(form.image) }}
+					<div class="d-flex justify-content-between">
+						<div class="col-md-5 col-lg-7">
+							{{ form_row(form.category) }}
+						</div>
+						<p>
+							<button class="btn btn-lg btn-success">Send</button>
+						</p>
+					</div>
+
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
