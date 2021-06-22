@@ -27,22 +27,6 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/post/{id}", name="post_view", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function view($id): Response
-    {
-        return $this->render('post/view.html.twig', [
-            'bg_image' => 'clean/assets/img/post-bg.jpg',
-            'id' => $id,
-            'post' => [
-                'title' => 'I love Symfony !',
-                'description' => 'Symfony features exist and they are FREE and open-source licensed!',
-                'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum enim lectus, a cursus lacus imperdiet ac. Etiam lorem est, facilisis sed justo sed, consectetur volutpat sapien. Quisque non venenatis tortor. Fusce eu orci ipsum. Suspendisse at dapibus nisl. Donec lacinia ligula a faucibus rhoncus. Nullam in sodales purus, consectetur finibus est. Duis sollicitudin dapibus risus, a pellentesque sapien accumsan ut. Morbi porta scelerisque dolor, eget imperdiet velit malesuada et. Quisque rhoncus posuere libero id vehicula. Fusce vel malesuada massa, eget ullamcorper nisl. Suspendisse maximus venenatis sem.'
-            ]
-        ]);
-    }
-
-     /**
      * @Route("/post/add", name="add_post")
      */
     public function addPost(Request $request): Response
@@ -65,4 +49,21 @@ class PostController extends AbstractController
             'bg_image' => 'clean/assets/img/post-bg.jpg',
         ]);
     }
+
+    /**
+     * ---Route("/post/{id}", name="post_view", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/post/{slug}", name="post_view", methods={"GET"})
+     */
+    public function view(Post $post): Response
+    {
+        // dd($post->getImage());
+        // on récupère l'instance de l'entité Post, l'identifiant est convertit en instance de classe
+        return $this->render('post/view.html.twig', [
+            
+            'bg_image' => $post->getImage(),
+            'post' => $post
+        ]);
+    }
+
+     
 }

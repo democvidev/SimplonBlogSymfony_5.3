@@ -1,6 +1,6 @@
 {% extends 'clean.html.twig' %}
 
-{% block title %}Hello PostController!
+{% block title %}Home View
 {% endblock %}
 {% block headerTitle %}My awesome blog
 {% endblock %}
@@ -18,7 +18,7 @@
 				{% for post in posts %}
 
 					<div class="post-preview">
-						<a href="{{ path('post_view', {id: 1}) }}">
+						<a href="{{ path('post_view', {'slug': post.slug}) }}">
 							<h2 class="post-title">{{ post.title }}</h2>
 							<img src="{{ post.image }}" alt="" style="width: 100%">
 							<h3 class="post-subtitle">{{ post.content | u.truncate(250, '...') | raw }}</h3>
@@ -26,7 +26,7 @@
 						<p class="post-meta">Posted by
 							<a href="#">{{ post.user.email}}</a>
 							on
-							{{ post.createdAt | ago}}</p>
+							{{ post.createdAt | ago}} - Filed in {{ post.category.name }}</p>
 					</div>
 					<!-- Divider-->
 					<hr class="my-4">
