@@ -80,7 +80,7 @@ class PostController extends AbstractController
 
         $oldPosts = $postRepository->findOldPosts(4); // injection de dépendances PostRepository dans la signature de la méthode
         // dd($oldPosts);
-        
+        return $this->render('post/view.html.twig', []);
     }
     
 
