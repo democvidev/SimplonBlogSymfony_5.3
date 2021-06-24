@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\Category;
 use App\Form\PostFormType;
 use App\Form\CategoryFormType;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * @Route("/admin", name="admin_")
  */
 class CategoryController extends AbstractController
-{    
+{
+    /**
+     * @Route("/category", name="category_index")
+     */
+    public function indexCategory(
+        CategoryRepository $categoryRepository
+    ): Response {
+        return $this->render('admin/category/index.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
+    }
 
     /**
      * @Route("/category/add", name="add_category")
@@ -39,5 +50,5 @@ class CategoryController extends AbstractController
         return $this->render('admin/category/add.html.twig', [
             'form' => $form->createView(),
         ]);
-    }     
+    }
 }
