@@ -22,31 +22,7 @@ class AdminController extends AbstractController
     public function home(): Response
     {
         return $this->render('admin/index.html.twig', []);
-    }
-
-    /**
-     * @Route("/category/add", name="add_category")
-     */
-    public function addCategory(Request $request): Response
-    {
-        $category = new Category();
-        $form = $this->createForm(CategoryFormType::class, $category);
-
-        $form->handleRequest($request);
-        // verifie si on est dans le cas de submit et que les données correspondent aux critères de validation
-        if ($form->isSubmitted() && $form->isValid()) {
-            // connexion à l'ORM Doctrine, entityManager
-            $em = $this->getDoctrine()->getManager();
-            // fonction intéligente qui decide la requête à faire (SELECT, UPDATE)
-            $em->persist($category);
-            // exécution de la requête
-            $em->flush();
-            return $this->redirectToRoute('admin_home');
-        }
-        return $this->render('admin/category/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+    }    
 
      /**
      * @Route("/post/add", name="add_post")
