@@ -8,35 +8,48 @@
 {% endblock %}
 
 {% block body %}
-	{# {{ dump(posts) }} #}
-	<!-- Main Content-->
-		<div class="container px-4 px-lg-5"> <div class="row gx-4 gx-lg-5 justify-content-center">
-			<div
-				class="col-md-10 col-lg-8 col-xl-7">
-				<!-- Post preview-->
-
-				{% for post in posts %}
+	<div class="container px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5">
+			<div class="col-sm-12 col-md-8 col-xl-9">
+				{% for post in lastPosts %}
 
 					<div class="post-preview">
 						<a href="{{ path('post_view', {'slug': post.slug}) }}">
 							<h2 class="post-title">{{ post.title }}</h2>
-							<img src="{{ post.image }}" alt="" style="width: 100%">
-							<h3 class="post-subtitle">{{ post.content | u.truncate(250, '...') | raw }}</h3>
+							<img src="{{ post.image }}" alt="" style="width: 90%">
+							<h3 class="post-subtitle">{{ post.content | u.truncate(100, '...') | raw }}</h3>
 						</a>
 						<p class="post-meta">Posted by
 							<a href="#">{{ post.user.email}}</a>
 							on
-							{{ post.createdAt | ago}} - Filed in {{ post.category.name }}</p>
+							{{ post.createdAt | ago}}
+							- Filed in
+							{{ post.category.name }}
+						</p>
 					</div>
 					<!-- Divider-->
 					<hr class="my-4">
 
 				{% endfor %}
-				
 				<!-- Pager-->
 				<div class="d-flex justify-content-end mb-4">
 					<a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
 				</div>
+			</div>
+			<div class="col-sm-12 col-md-3 col-xl-2">
+				<p>Archives</p>
+				{% for post in oldPosts %}
+					<div class="post-preview">
+						<a href="{{ path('post_view', {'slug': post.slug}) }}">
+							<h5 class="post-title">{{ post.title }}</h5>
+							<img src="{{ post.image }}" alt="" style="width: 100%">
+							<h6 class="post-subtitle">{{ post.content | u.truncate(20, '...') | raw }}</h6>
+						</a>
+						<p class="post-meta">Posté							
+							{{ post.createdAt | ago}}							
+						</p>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

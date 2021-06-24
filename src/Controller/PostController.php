@@ -18,11 +18,13 @@ class PostController extends AbstractController
     public function home(PostRepository $postRepository): Response
     {
         // 
-        $posts = $postRepository->findAll(); // injection de dépendances PostRepository dans la signature de la méthode
+        $lastPosts = $postRepository->findAll(); // injection de dépendances PostRepository dans la signature de la méthode
         // dd($posts);
+        $oldPosts = $postRepository->findOldPosts();
         return $this->render('post/home.html.twig', [
             'bg_image' => 'clean/assets/img/home-bg.jpg',
-            'posts' => $posts
+            'lastPosts' => $lastPosts,
+            'oldPosts' => $oldPosts
         ]);
     }
 
@@ -54,16 +56,33 @@ class PostController extends AbstractController
      * ---Route("/post/{id}", name="post_view", methods={"GET"}, requirements={"id"="\d+"})
      * @Route("/post/{slug}", name="post_view", methods={"GET"})
      */
-    public function view(Post $post): Response
+    public function view(Post $post, PostRepository $postRepository): Response
     {
+        $oldPosts = $postRepository->findOldPosts();
         // dd($post->getImage());
         // on récupère l'instance de l'entité Post, l'identifiant est convertit en instance de classe
         return $this->render('post/view.html.twig', [
             
             'bg_image' => $post->getImage(),
-            'post' => $post
+            'singlePost' => $post,
+            'oldPosts' => $oldPosts
         ]);
     }
+
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test(PostRepository $postRepository): Response
+    {    
+        $lastPosts = $postRepository->findLastPosts(2); // injection de dépendances PostRepository dans la signature de la méthodeP
+        // dd($lastPosts);
+
+        $oldPosts = $postRepository->findOldPosts(4); // injection de dépendances PostRepository dans la signature de la méthode
+        // dd($oldPosts);
+        
+    }
+    
 
      
 }

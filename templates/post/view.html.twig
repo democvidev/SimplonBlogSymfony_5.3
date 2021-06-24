@@ -1,24 +1,38 @@
 {% extends 'clean.html.twig' %}
 
-{% block title %}Post View{% endblock %}
-{% block headerTitle %}{{ post.title }}{% endblock %}
+{% block title %}Post View
+{% endblock %}
+{% block headerTitle %}
+	{{ singlePost.title }}
+{% endblock %}
 {% block subHeaderTitle %}{% endblock %}
 
 {% block body %}
 
-<!-- Post Content-->
-<article class="mb-4">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <p>{{ post.content | raw}}</p>
-                    Placeholder text by
-                    <a href="http://spaceipsum.com/">Space Ipsum</a>
-                    &middot; Images by
-                    <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</article>
-{% endblock %}
+	<!-- Post Content-->
+	<article class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-12 col-lg-9 col-xl-9">
+					<p>{{ singlePost.content | raw}}</p>
+					Placeholder text by
+					<a href="http://spaceipsum.com/">Space Ipsum</a>
+					&middot; Images by
+					<a href="{{ singlePost.image}}">NASA on The Commons</a>
+				</p>
+			</div>
+			<div class="col-md-12 col-lg-3 col-xl-3">
+				{% for post in oldPosts %}
+					<div class="post-preview">
+						<a href="{{ path('post_view', {'slug': post.slug}) }}">
+							<h5 class="post-title">{{ post.title }}</h5>
+						</a>
+						<p class="post-meta">Posté
+							{{ post.createdAt | ago}}							
+						</p>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</article>{% endblock %}
