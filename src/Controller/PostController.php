@@ -18,7 +18,7 @@ class PostController extends AbstractController
     public function home(PostRepository $postRepository): Response
     {
         // 
-        $lastPosts = $postRepository->findAll(); // injection de dépendances PostRepository dans la signature de la méthode
+        $lastPosts = $postRepository->findLastPosts(); // injection de dépendances PostRepository dans la signature de la méthode
         // dd($posts);
         $oldPosts = $postRepository->findOldPosts();
         return $this->render('post/home.html.twig', [

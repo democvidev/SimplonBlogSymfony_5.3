@@ -133,6 +133,29 @@
 		</div>
 		<div id="layoutSidenav_content">
 			<main>
+			{% for flashError in app.flashes('verify_email_error') %}
+				<div class="mb-4">
+					<div class="container px-4 px-lg-5">
+						<div class="row gx-4 gx-lg-5 justify-content-center">
+							<div class="col-md-10 col-lg-8 col-xl-7">
+								<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+			{% for flashSuccess in app.flashes('success') %}
+				<div class="mb-4">
+					<div class="container px-4 px-lg-5">
+						<div class="row gx-4 gx-lg-5 justify-content-center">
+							<div class="col-md-10 col-lg-8 col-xl-7">
+								<div class="alert alert-success" role="alert">{{ flashSuccess }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 				<div class="container-fluid px-4">
 					<h1 class="mt-4">Dashboard</h1>
 					<ol class="breadcrumb mb-4">

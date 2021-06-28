@@ -179,6 +179,11 @@
 										</td>
 										<td>
 											<a href="{{ path('admin_post_update', {id: post.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+											<a href="" class="btn btn-danger modal-trigger btn-sm" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="{{ post.id }}" data-title="{{ post.title }}">Supprimer</a>
+											<!-- Button trigger modal -->
+											{# <button type="button" class="btn btn-danger modal-trigger btn-sm" data-bs-toggle="modal" data-bs-target="#modalDelete">
+												Supprimer
+											</button> #}
 										</td>
 									</tr>
 								{% endfor %}
@@ -202,24 +207,52 @@
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Supprimer l'article</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					{# <button type="button" class="btn btn-primary">Oui</button> #}
+					<a href="" class="btn btn-danger btn-sm">Supprimer</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
 	<script>
-    // on attend le chargement complete de la page
-		window.onload = () => {
-            // on récupère toutes les références des checkbox dans une liste
-        let activate = document.querySelectorAll("[type=checkbox]")
-        for (let button of activate) {
-            // déclanche une callback a chaque click
-        button.addEventListener("click", function () {
-        let xmlhttp = new XMLHttpRequest
-        xmlhttp.open("get", `/admin/post/activate/${
-        this.dataset.id
-        }`)
-        xmlhttp.send()
-        })
-    }
+		// on attend le chargement complete de la page
+		window.onload = () => { // on récupère toutes les références des checkbox dans une liste
+		let activate = document.querySelectorAll("[type=checkbox]")
+		for (let button of activate) { // déclanche une callback a chaque click
+		button.addEventListener("click", function (e) {
+		let xmlhttp = new XMLHttpRequest
+		xmlhttp.open("get", `/admin/post/activate/${
+		// recupere l'id de l'instance du checkbox qui aura été
+		this.dataset.id
+		}`)
+		xmlhttp.send()
+		})
+	}
+	let btDeletes = document.querySelectorAll(".modal-trigger")
+	for(let btDelete of btDeletes) {
+
+		btDelete.addEventListener("click", function(){
+			document.querySelector(".modal-footer a").href = `/admin/post/delete/${this.dataset.id}`
+			document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article : "${this.dataset.title}" ?`
+		})
+	}
+
+
 }
 	</script>
 {% endblock %}

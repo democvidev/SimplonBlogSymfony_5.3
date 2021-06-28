@@ -35,10 +35,13 @@ class PostController extends AbstractController
     public function activatePost(Post $post): Response
     {
         // dd($post);
+        $post->setActive(($post->getActive()) ? false : true); // toggle buttton pour l'activation
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($post);
+        $entityManager->persist($post); // on pernise les données en faisant un update
         $entityManager->flush();
-        return $this->redirectToRoute('admin_post_index');
+        // retourne une réponse http au controleur et au JS qui a été éfectué la reqête asynchrone
+        return new Response("true", 200);
+        // return $this->json(['code' => 200, 'message' => 'Like bien ajouté',], 200);
     }
 
 
@@ -56,6 +59,18 @@ class PostController extends AbstractController
             'singlePost' => $post,
             'oldPosts' => $oldPosts
         ]);
+    }
+
+    /**
+     * @Route("/post/delete/{id}", name="post_delete", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function deletePost(Post $post): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($post); 
+        $entityManager->flush();
+        $this->addFlash('succes', 'L\'article vient d\'être supprimé');
+        return $this->redirectToRoute('admin_home');
     }
 
 
