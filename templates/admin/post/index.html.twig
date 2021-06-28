@@ -166,12 +166,20 @@
 							<tbody>
 								{% for post in posts %}
 									<tr>
-										<td>{{ post.Id }}</td>
-										<td>{{ post.Title }}</td>
+										<td>{{ post.id }}</td>
+										<td>{{ post.title }}</td>
 										<td>{{ post.user }}</td>
 										<td>{{ post.createdAt |date('d-m-Y H:i:s') }}</td>
-										<td>{{ post.active }}</td>
-										<td>test</td>
+										{# <td>{{ post.active }}</td> #}
+										<td>
+											<div class="form-check form-switch">
+												<input type="checkbox" class="form-check-input" id="customSwitch{{ post.id }}" {{ (post.active) ? 'checked' : '' }} data-id="{{ post.id }}">
+												<label class="form-check-label" for="customSwitch{{ post.id }}"></label>
+											</div>
+										</td>
+										<td>
+											<a href="{{ path('admin_post_update', {id: post.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
@@ -194,4 +202,24 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+    // on attend le chargement complete de la page
+		window.onload = () => {
+            // on récupère toutes les références des checkbox dans une liste
+        let activate = document.querySelectorAll("[type=checkbox]")
+        for (let button of activate) {
+            // déclanche une callback a chaque click
+        button.addEventListener("click", function () {
+        let xmlhttp = new XMLHttpRequest
+        xmlhttp.open("get", `/admin/post/activate/${
+        this.dataset.id
+        }`)
+        xmlhttp.send()
+        })
+    }
+}
+	</script>
 {% endblock %}

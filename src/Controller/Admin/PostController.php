@@ -29,6 +29,18 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/post/activate/{id}", name="post_activate", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function activatePost(Post $post): Response
+    {
+        // dd($post);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($post);
+        $entityManager->flush();
+        return $this->redirectToRoute('admin_post_index');
+    }
+
 
     /**
      * @Route("/post/update/{id}", name="post_update", methods={"GET"}, requirements={"id"="\d+"})
