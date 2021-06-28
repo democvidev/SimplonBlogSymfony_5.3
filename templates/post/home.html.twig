@@ -11,20 +11,20 @@
 	<div class="container px-4 px-lg-7">
 		<div class="row gx-4 gx-lg-7">
 			<div class="col-sm-12 col-md-8 col-xl-9">
-				{% for post in lastPosts %}
+				{% for lastPost in lastPosts %}
 
 					<div class="post-preview">
-						<a href="{{ path('post_view', {'slug': post.slug}) }}">
-							<h2 class="post-title">{{ post.title }}</h2>
-							<img src="{{ post.image }}" alt="" style="width: 90%">
-							<h3 class="post-subtitle">{{ post.content | u.truncate(100, '...') | raw }}</h3>
+						<a href="{{ path('post_view', {'slug': lastPost.slug}) }}">
+							<h2 class="post-title">{{ lastPost.title }}</h2>
+							<img src="{{ lastPost.image }}" alt="" style="width: 90%">
+							<h3 class="post-subtitle">{{ lastPost.content | u.truncate(100, '...') | raw }}</h3>
 						</a>
 						<p class="post-meta">Posted by
-							<a href="#">{{ post.user.email}}</a>
+							<a href="#">{{ lastPost.user.email}}</a>
 							on
-							{{ post.createdAt | ago}}
+							{{ lastPost.createdAt | ago}}
 							- Filed in
-							{{ post.category.name }}
+							{{ lastPost.category.name }}
 						</p>
 					</div>
 					<!-- Divider-->
@@ -38,15 +38,15 @@
 			</div>
 			<div class="col-sm-12 col-md-3 col-xl-2">
 				<p>Archives</p>
-				{% for post in oldPosts %}
+				{% for oldPost in oldPosts %}
 					<div class="post-preview">
-						<a href="{{ path('post_view', {'slug': post.slug}) }}">
-							<h5 class="post-title">{{ post.title }}</h5>
-							<img src="{{ post.image }}" alt="" style="width: 100%">
-							<h6 class="post-subtitle">{{ post.content | u.truncate(20, '...') | raw }}</h6>
+						<a href="{{ path('post_view', {'slug': oldPost.slug}) }}">
+							<h5 class="post-title">{{ oldPost.title }}</h5>
+							<img src="{{ oldPost.image }}" alt="" style="width: 100%">
+							<h6 class="post-subtitle">{{ oldPost.content | u.truncate(20, '...') | raw }}</h6>
 						</a>
 						<p class="post-meta">Posté							
-							{{ post.createdAt | ago}}							
+							{{ oldPost.createdAt | ago}}							
 						</p>
 					</div>
 				{% endfor %}

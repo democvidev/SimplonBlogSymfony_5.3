@@ -50,9 +50,9 @@ class PostFormType extends AbstractType
                     'attr' => [
                         'class' => 'form-select',
                     ],
-                ]
+                ])
                 // ->add('Send', SubmitType::class)
-            );
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

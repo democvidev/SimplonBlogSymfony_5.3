@@ -17,10 +17,13 @@ class PostController extends AbstractController
      */
     public function home(PostRepository $postRepository): Response
     {
-        // 
-        $lastPosts = $postRepository->findLastPosts(); // injection de dépendances PostRepository dans la signature de la méthode
-        // dd($posts);
+        // injection de dépendances PostRepository dans la signature de la méthode
+        // $lastPosts = $postRepository->findLastPosts(); 
+        $lastPosts = $this->getDoctrine()->getRepository(Post::class)->findBy([
+            'active' => 1
+        ], ['createdAt' => 'desc']);
         $oldPosts = $postRepository->findOldPosts();
+
         return $this->render('post/home.html.twig', [
             'bg_image' => 'clean/assets/img/home-bg.jpg',
             'lastPosts' => $lastPosts,
@@ -43,7 +46,7 @@ class PostController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($post);
         $em->flush();
-        return $this->redirectToRoute('admin_home');
+        return $this->redirectToRoute('home');
     }
 
         return $this->render('post/add.html.twig', [

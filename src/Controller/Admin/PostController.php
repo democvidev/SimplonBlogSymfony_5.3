@@ -16,16 +16,40 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post", name="post_index")
+     * @Route("/posts", name="post_index")
      */
     public function index(PostRepository $postRepository): Response
     {
-        // 
+        //
         $posts = $postRepository->findAll(); // injection de dépendances PostRepository dans la signature de la méthode
         // dd($posts);
         return $this->render('admin/post/index.html.twig', [
             'bg_image' => 'clean/assets/img/home-bg.jpg',
-            'posts' => $posts
+            'posts' => $posts,
+        ]);
+    }
+
+    /**
+     * @Route("/post/add", name="post_add")
+     */
+    public function addPost(Request $request): Response
+    {
+        $post = new Post();
+        $form = $this->createForm(PostFormType::class, $post);
+        $form->handleRequest($request);
+        
+    if ($form->isSubmitted() && $form->isValid()) {
+        $post->setUser($this->getUser());
+        $post->setActive(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($post);
+        $em->flush();
+        return $this->redirectToRoute('home');
+    }
+
+        return $this->render('admin/post/add.html.twig', [
+            'form' => $form->createView(),
+            'bg_image' => 'clean/assets/img/post-bg.jpg',
         ]);
     }
 
@@ -35,29 +59,35 @@ class PostController extends AbstractController
     public function activatePost(Post $post): Response
     {
         // dd($post);
-        $post->setActive(($post->getActive()) ? false : true); // toggle buttton pour l'activation
+        $post->setActive($post->getActive() ? false : true); // toggle buttton pour l'activation
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($post); // on pernise les données en faisant un update
         $entityManager->flush();
         // retourne une réponse http au controleur et au JS qui a été éfectué la reqête asynchrone
-        return new Response("true", 200);
-        // return $this->json(['code' => 200, 'message' => 'Like bien ajouté',], 200);
+        return new Response('true', 200);
     }
 
-
     /**
-     * @Route("/post/update/{id}", name="post_update", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/post/update/{id}", name="post_update", requirements={"id"="\d+"})
      */
-    public function updatePost(Post $post, PostRepository $postRepository): Response
+    public function updatePost(Post $post, Request $request): Response
     {
-        $oldPosts = $postRepository->findOldPosts();
-        // dd($post->getImage());
-        // on récupère l'instance de l'entité Post, l'identifiant est convertit en instance de classe
-        return $this->render('post/view.html.twig', [
-            
-            'bg_image' => $post->getImage(),
-            'singlePost' => $post,
-            'oldPosts' => $oldPosts
+        $form = $this->createForm(PostFormType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post->setUser($this->getUser());
+            $post->setActive(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+            $this->addFlash('success', 'Les modifications viennent d\'être enregistré');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('admin/post/update.html.twig', [
+            'form' => $form->createView(),
+            'bg_image' => 'clean/assets/img/post-bg.jpg',
         ]);
     }
 
@@ -67,18 +97,17 @@ class PostController extends AbstractController
     public function deletePost(Post $post): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($post); 
+        $entityManager->remove($post);
         $entityManager->flush();
         $this->addFlash('succes', 'L\'article vient d\'être supprimé');
         return $this->redirectToRoute('admin_home');
     }
 
-
     /**
      * @Route("/test", name="test")
      */
     public function test(PostRepository $postRepository): Response
-    {    
+    {
         $lastPosts = $postRepository->findLastPosts(2); // injection de dépendances PostRepository dans la signature de la méthodeP
         // dd($lastPosts);
 
@@ -86,7 +115,4 @@ class PostController extends AbstractController
         // dd($oldPosts);
         return $this->render('post/view.html.twig', []);
     }
-    
-
-     
 }

@@ -19,7 +19,7 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findOldPosts(int $nb = 2): array
+    public function findOldPosts(int $nb = 4): array
     {
         $entityManager = $this->getEntityManager();
 
@@ -40,7 +40,7 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.active = :active')
             ->setParameter('active', true)
-            ->orderBy('p.createdAt', 'DESC')
+            ->orderBy('p.createdAt')
             ->setMaxResults($nb)
             ->getQuery()
             ->getResult()
