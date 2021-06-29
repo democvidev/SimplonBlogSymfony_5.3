@@ -17,7 +17,7 @@
 						<a href="{{ path('post_view', {'slug': lastPost.slug}) }}">
 							<h2 class="post-title">{{ lastPost.title }}</h2>
 							<img src="{{ lastPost.image }}" alt="" style="width: 90%">
-							<h3 class="post-subtitle">{{ lastPost.content | u.truncate(100, '...') | raw }}</h3>
+							<h3 class="post-subtitle">{{ lastPost.content | u.truncate(10, '...') | raw }}</h3>
 						</a>
 						<p class="post-meta">Posted by
 							<a href="#">{{ lastPost.user.email}}</a>

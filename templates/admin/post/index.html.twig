@@ -14,29 +14,29 @@
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 			<i class="fas fa-bars"></i>
 		</button>
-		{% for flashError in app.flashes('verify_email_error') %}
-				<div class="mb-4">
-					<div class="container px-4 px-lg-5">
-						<div class="row gx-4 gx-lg-5 justify-content-center">
-							<div class="col-md-10 col-lg-8 col-xl-7">
-								<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-							</div>
+		<div class="mb-4" style="display: block" id="flash-container">
+			{% for flashError in app.flashes('verify_email_error') %}
+
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-md-10 col-lg-8 col-xl-7">
+							<div class="alert alert-danger" role="alert">{{ flashError }}</div>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 
 			{% for flashSuccess in app.flashes('success') %}
-				<div class="mb-4">
-					<div class="container px-4 px-lg-5">
-						<div class="row gx-4 gx-lg-5 justify-content-center">
-							<div class="col-md-10 col-lg-8 col-xl-7">
-								<div class="alert alert-success" role="alert">{{ flashSuccess }}</div>
-							</div>
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-md-10 col-lg-8 col-xl-7">
+							<div class="alert alert-success" role="alert">{{ flashSuccess }}</div>
 						</div>
 					</div>
 				</div>
+
 			{% endfor %}
+		</div>
 		<!-- Navbar Search-->
 		<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 			<div class="input-group">
@@ -226,52 +226,58 @@
 		</div>
 	</div>
 
-	
-<!-- Modal -->
-<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Supprimer un article</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <a href="" class="btn btn-primary">Supprimer</a>
-        </div>
-        </div>
-    </div>
-</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Supprimer un article</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<a href="" class="btn btn-primary">Supprimer</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
 	<script>
-	// on attend le chargement complete de la page
-	window.onload = () => {
-		 // on récupère toutes les références des checkbox dans une liste
-		let activate = document.querySelectorAll("[type=checkbox]")
-		for (let button of activate) { // déclanche une callback a chaque click
-			button.addEventListener("click", function () {
-				let xmlhttp = new XMLHttpRequest
-				xmlhttp.open("get", `/admin/post/activate/${
-				// recupere l'id de l'instance du checkbox qui aura été
-				this.dataset.id
-				}`)
-				xmlhttp.send()
-			})
-		}
+		// on attend le chargement complete de la page
+window.onload = () => { // on récupère toutes les références des checkbox dans une liste
+let activate = document.querySelectorAll("[type=checkbox]")
+for (let button of activate) { // déclanche une callback a chaque click
+button.addEventListener("click", function () {
+let xmlhttp = new XMLHttpRequest
+xmlhttp.open("get", `/admin/post/activate/${
+// recupere l'id de l'instance du checkbox qui aura été
+this.dataset.id
+}`)
+xmlhttp.send()
+})
+}
 
-		let btdeletes = document.querySelectorAll(".modal-trigger")
-		for(let btdelete of btdeletes) {
-			// console.log(btdelete)
-			btdelete.addEventListener("click", function(){
-				document.querySelector(".modal-footer a").href=`/admin/post/delete/${this.dataset.id}`
-				document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${this.dataset.title}"`
-			})
-		}
-	}
+let btdeletes = document.querySelectorAll(".modal-trigger")
+for (let btdelete of btdeletes) { // console.log(btdelete)
+btdelete.addEventListener("click", function () {
+document.querySelector(".modal-footer a").href = `/admin/post/delete/${
+this.dataset.id
+}`
+document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${
+this.dataset.title
+}"`
+})
+}
+}
+const flashDiv = document.getElementById('flash-container')
+setTimeout(function () {
+flashDiv.style.display = "none"
+}, 3000);
 	</script>
 {% endblock %}

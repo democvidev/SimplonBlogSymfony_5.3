@@ -21,7 +21,7 @@ class PostController extends AbstractController
         // $lastPosts = $postRepository->findLastPosts(); 
         $lastPosts = $this->getDoctrine()->getRepository(Post::class)->findBy([
             'active' => 1
-        ], ['createdAt' => 'desc']);
+        ], ['createdAt' => 'desc'], 3);
         $oldPosts = $postRepository->findOldPosts();
 
         return $this->render('post/home.html.twig', [
