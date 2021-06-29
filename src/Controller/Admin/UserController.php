@@ -28,49 +28,49 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/user/add", name="user_add")
-     */
-    public function addUser(Request $request): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
+    // /**
+    //  * @Route("/user/add", name="user_add")
+    //  */
+    // public function addUser(Request $request): Response
+    // {
+    //     $user = new User();
+    //     $form = $this->createForm(UserFormType::class, $user);
+    //     $form->handleRequest($request);
         
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-        $this->addFlash('success', 'Un nouveau membre vient d\'être ajouté');
-        return $this->redirectToRoute('admin_home');
-    }
+    // if ($form->isSubmitted() && $form->isValid()) {
+    //     $em = $this->getDoctrine()->getManager();
+    //     $em->persist($user);
+    //     $em->flush();
+    //     $this->addFlash('success', 'Un nouveau membre vient d\'être ajouté');
+    //     return $this->redirectToRoute('admin_home');
+    // }
 
-        return $this->render('admin/user/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('admin/user/add.html.twig', [
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
 
-    /**
-     * @Route("/user/update/{id}", name="post_update", requirements={"id"="\d+"})
-     */
-    public function updateUser(User $user, Request $request): Response
-    {
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
+    // /**
+    //  * @Route("/user/update/{id}", name="post_update", requirements={"id"="\d+"})
+    //  */
+    // public function updateUser(User $user, Request $request): Response
+    // {
+    //     $form = $this->createForm(UserFormType::class, $user);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            $this->addFlash('success', 'Les modifications viennent d\'être enregistré');
-            return $this->redirectToRoute('admin_home');
-        }
+    //     if ($form->isSubmitted() && $form->isValid()) {            
+    //         $em = $this->getDoctrine()->getManager();
+    //         $em->persist($user);
+    //         $em->flush();
+    //         $this->addFlash('success', 'Les modifications viennent d\'être enregistré');
+    //         return $this->redirectToRoute('admin_home');
+    //     }
 
-        return $this->render('admin/user/update.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('admin/user/update.html.twig', [
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/User/delete/{id}", name="post_delete", methods={"GET"}, requirements={"id"="\d+"})

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 // l'annotation prend plusieurs parametres: le chemin relatif de l'url, le nom de la route, 
 // on indique une route de la classe qui va se répéter dans toutes les méthodes 
+// prefix de la route et du name
 
 /**
  * @Route("/admin", name="admin_")
@@ -42,24 +43,24 @@ class PostController extends AbstractController
     public function addPost(Request $request): Response
     // la méthode addPost prend en paramètre une variable de tyoe objet Request et retourne un objet Response
     {
-        //instanciation d'un nouvel objet Post
+        //instanciation d'un nouvel objet Post, c'est une instance vide
         $post = new Post();
         // la méthode protégée createForm() de l'AbstractController  prend en paramètre le type du formulaire à créer et l'objet dans lequel vont être stockées les données, et retourne un formulaire qui est une instance de la classe PostFormType
         $form = $this->createForm(PostFormType::class, $post);
-        // la méthode publique handleRequest() de FormInterface inspècte les données fournies dans le formulaire 
+        // la méthode publique handleRequest() de FormInterface inspècte la reqête fournie
         $form->handleRequest($request);
         
         // si le formulaire a été envoyé et s'il a été validé
     if ($form->isSubmitted() && $form->isValid()) {
-        // l'objet courant PostController récupere les infos de l'utilisateur grace à la méthode getUser() de l'interface UserInterface et il va les enregistrer avec la méthode publique setUser() dans l'instance de la classe Post $post
-        $post->setUser($this->getUser());
+        // l'objet courant PostController récupere les infos de l'utilisateur connecté grace à la méthode getUser() de l'interface UserInterface et il va les enregistrer avec la méthode publique setUser() dans l'instance de la classe Post $post
+        $post->setUser($this->getUser()); // hydratation
         // l'instance $post appelle la méthode publique setActive(), en lui pasant le paramètre exigé : true ou false
         $post->setActive(false);
-        // l'entityManager de Doctrine est appelé par l'objet courant
+        // l'entityManager de Doctrine, un mécanisme de dialogue avec la bdd, il est appelé par l'objet courant
         $em = $this->getDoctrine()->getManager();
         // l'entityManager analyse les données de l'instance $post et prend certains décisions pour les persister, les synchroniser, et faire les reqûetes correspondantes 
         $em->persist($post);
-        // dernière commande pour envoyer les modifications dans la base de données
+        // dernière commande pour valider les modifications dans la base de données, commit et rollback
         $em->flush();
         // renvoie une redirection vers la route 'home' soit page d'accueil en cas de succes
         return $this->redirectToRoute('home');
