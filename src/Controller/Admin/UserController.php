@@ -52,7 +52,7 @@ class UserController extends AbstractController
 
 
     // /**
-    //  * @Route("/user/update/{id}", name="post_update", requirements={"id"="\d+"})
+    //  * @Route("/user/update/{id}", name="user_update", requirements={"id"="\d+"})
     //  */
     // public function updateUser(User $user, Request $request): Response
     // {
@@ -72,16 +72,16 @@ class UserController extends AbstractController
     //     ]);
     // }
 
-    /**
-     * @Route("/User/delete/{id}", name="post_delete", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function deleteUser(User $user): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
-        $entityManager->flush();
-        $this->addFlash('succes', 'L\'article vient d\'être supprimé');
-        return $this->redirectToRoute('admin_home');
-    }
+    // /**
+    //  * @Route("/user/delete/{id}", name="user_delete", methods={"GET"}, requirements={"id"="\d+"})
+    //  */
+    // public function deleteUser(User $user): Response
+    // {
+    //     $entityManager = $this->getDoctrine()->getManager();
+    //     $entityManager->remove($user);
+    //     $entityManager->flush();
+    //     $this->addFlash('succes', 'L\'article vient d\'être supprimé');
+    //     return $this->redirectToRoute('admin_home');
+    // }
    
 }

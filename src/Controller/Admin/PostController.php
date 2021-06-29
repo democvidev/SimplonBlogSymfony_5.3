@@ -11,22 +11,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-// l'annotation prend plusieurs parametres: le chemin relatif de l'url, le nom de la route, 
-// on indique une route de la classe qui va se répéter dans toutes les méthodes 
+// l'annotation prend plusieurs parametres: le chemin relatif de l'url, le nom de la route,
+// on indique une route de la classe qui va se répéter dans toutes les méthodes
 // prefix de la route et du name
 
 /**
  * @Route("/admin", name="admin_")
  */
 class PostController extends AbstractController
-// la classe PostController hérite de toutes les méthodes publiques et protégées, propriétés et constantes de la classe parente AbstractController,  
 {
+    // la classe PostController hérite de toutes les méthodes publiques et protégées, propriétés et constantes de la classe parente AbstractController,
     /**
      * @Route("/posts", name="post_index")
      */
     public function index(PostRepository $postRepository): Response
-    // méthode publique, accéssible dans tout le programme, prend en paramètre une variable de type objet PostRepository, et renvoie une reponse de type objet Response
     {
+        // méthode publique, accéssible dans tout le programme, prend en paramètre une variable de type objet PostRepository, et renvoie une reponse de type objet Response
+        // méthode publique, accéssible dans tout le programme, prend en paramètre une variable de type objet PostRepository, et renvoie une reponse de type objet Response
         $posts = $postRepository->findAll(); // injection de dépendances PostRepository dans la signature de la méthode index, la méthode findAll() est prédéfinie dans la classe PostRépository est renvoie toutes les lignes dans la base de données de l'entité Post qui vont être stockées dans tableau et assignées à la variable $posts
 
         // dd($posts); // die and dump s'utilise pour le debogage
@@ -41,31 +42,32 @@ class PostController extends AbstractController
      * @Route("/post/add", name="post_add")
      */
     public function addPost(Request $request): Response
-    // la méthode addPost prend en paramètre une variable de tyoe objet Request et retourne un objet Response
     {
+        // la méthode addPost prend en paramètre une variable de tyoe objet Request et retourne un objet Response
+        // la méthode addPost prend en paramètre une variable de tyoe objet Request et retourne un objet Response
         //instanciation d'un nouvel objet Post, c'est une instance vide
         $post = new Post();
         // la méthode protégée createForm() de l'AbstractController  prend en paramètre le type du formulaire à créer et l'objet dans lequel vont être stockées les données, et retourne un formulaire qui est une instance de la classe PostFormType
         $form = $this->createForm(PostFormType::class, $post);
         // la méthode publique handleRequest() de FormInterface inspècte la reqête fournie
         $form->handleRequest($request);
-        
+
         // si le formulaire a été envoyé et s'il a été validé
-    if ($form->isSubmitted() && $form->isValid()) {
-        // l'objet courant PostController récupere les infos de l'utilisateur connecté grace à la méthode getUser() de l'interface UserInterface et il va les enregistrer avec la méthode publique setUser() dans l'instance de la classe Post $post
-        $post->setUser($this->getUser()); // hydratation
-        // l'instance $post appelle la méthode publique setActive(), en lui pasant le paramètre exigé : true ou false
-        $post->setActive(false);
-        // l'entityManager de Doctrine, un mécanisme de dialogue avec la bdd, il est appelé par l'objet courant
-        $em = $this->getDoctrine()->getManager();
-        // l'entityManager analyse les données de l'instance $post et prend certains décisions pour les persister, les synchroniser, et faire les reqûetes correspondantes 
-        $em->persist($post);
-        // dernière commande pour valider les modifications dans la base de données, commit et rollback
-        $em->flush();
-        // renvoie une redirection vers la route 'home' soit page d'accueil en cas de succes
-        return $this->redirectToRoute('home');
-    }
-    // la méthode render() génère le rendu du template twig et lui passe un tableau de variables, en premier parametre c'est le chemin relatif, l'instance $form appele la méthode createView() pour fabriquer le HTML et l'assigne à la variable 'form'
+        if ($form->isSubmitted() && $form->isValid()) {
+            // l'objet courant PostController récupere les infos de l'utilisateur connecté grace à la méthode getUser() de l'interface UserInterface et il va les enregistrer avec la méthode publique setUser() dans l'instance de la classe Post $post
+            $post->setUser($this->getUser()); // hydratation
+            // l'instance $post appelle la méthode publique setActive(), en lui pasant le paramètre exigé : true ou false
+            $post->setActive(false);
+            // l'entityManager de Doctrine, un mécanisme de dialogue avec la bdd, il est appelé par l'objet courant
+            $em = $this->getDoctrine()->getManager();
+            // l'entityManager analyse les données de l'instance $post et prend certains décisions pour les persister, les synchroniser, et faire les reqûetes correspondantes
+            $em->persist($post);
+            // dernière commande pour valider les modifications dans la base de données, commit et rollback
+            $em->flush();
+            // renvoie une redirection vers la route 'home' soit page d'accueil en cas de succes
+            return $this->redirectToRoute('home');
+        }
+        // la méthode render() génère le rendu du template twig et lui passe un tableau de variables, en premier parametre c'est le chemin relatif, l'instance $form appele la méthode createView() pour fabriquer le HTML et l'assigne à la variable 'form'
 
         return $this->render('admin/post/add.html.twig', [
             'form' => $form->createView(),
@@ -87,6 +89,18 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/post/delete/{id}", name="post_delete", requirements={"id"="\d+"})
+     */
+    public function deletePost(Post $post): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($post);
+        $entityManager->flush();
+        $this->addFlash('success', 'L\'article vient d\'être supprimé');
+        return $this->redirectToRoute('admin_home');
+    }
+
+    /**
      * @Route("/post/update/{id}", name="post_update", requirements={"id"="\d+"})
      */
     public function updatePost(Post $post, Request $request): Response
@@ -100,25 +114,16 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
-            $this->addFlash('success', 'Les modifications viennent d\'être enregistré');
+            $this->addFlash(
+                'success',
+                'Les modifications viennent d\'être enregistré'
+            );
             return $this->redirectToRoute('admin_home');
         }
 
         return $this->render('admin/post/update.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/post/delete/{id}", name="post_delete", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function deletePost(Post $post): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($post);
-        $entityManager->flush();
-        $this->addFlash('succes', 'L\'article vient d\'être supprimé');
-        return $this->redirectToRoute('admin_home');
     }
 
     /**

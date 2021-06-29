@@ -14,29 +14,7 @@
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 			<i class="fas fa-bars"></i>
 		</button>
-		<div class="mb-4" style="display: block" id="flash-container">
-			{% for flashError in app.flashes('verify_email_error') %}
-
-				<div class="container px-4 px-lg-5">
-					<div class="row gx-4 gx-lg-5 justify-content-center">
-						<div class="col-md-10 col-lg-8 col-xl-7">
-							<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-
-			{% for flashSuccess in app.flashes('success') %}
-				<div class="container px-4 px-lg-5">
-					<div class="row gx-4 gx-lg-5 justify-content-center">
-						<div class="col-md-10 col-lg-8 col-xl-7">
-							<div class="alert alert-success" role="alert">{{ flashSuccess }}</div>
-						</div>
-					</div>
-				</div>
-
-			{% endfor %}
-		</div>
+		
 		<!-- Navbar Search-->
 		<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 			<div class="input-group">
@@ -275,9 +253,5 @@ this.dataset.title
 })
 }
 }
-const flashDiv = document.getElementById('flash-container')
-setTimeout(function () {
-flashDiv.style.display = "none"
-}, 3000);
 	</script>
 {% endblock %}
