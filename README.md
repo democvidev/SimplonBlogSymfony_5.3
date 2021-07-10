@@ -1,6 +1,11 @@
 # SimplonBlogSymfony_5.3
 
-Mon second projet Symfony chez Simplon
+### Mon second projet Symfony chez Simplon.
+C'est un blog. Dans la page d'accueil les articles sont affichés en 2 colonnes : 
+la colone gauche affiche une liste des articles les plus récents, 
+la colonne de droite affiche des articles anciens en vignette.
+Le thème Clean Blog de Bootstrap a été choisie pour la partie Front Office.
+SB Admin de Bootstrap --> Back Office.
 
 ## Installation
 
