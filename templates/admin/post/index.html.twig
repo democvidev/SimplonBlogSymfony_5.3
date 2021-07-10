@@ -227,33 +227,82 @@
 
 {% block javascripts %}
 <script>
+		
 		// on attend le chargement complete de la page
-	window.onload = () => { // on récupère toutes les références des checkbox dans une liste
-		let activate = document.querySelectorAll("[type=checkbox]")
-		console.log(activate)
-		for (let button of activate) { // déclanche une callback a chaque click
-				button.addEventListener("click", function () {
-				let xmlhttp = new XMLHttpRequest
-				xmlhttp.open("get", `/admin/post/activate/${
-				// recupere l'id de l'instance du checkbox qui aura été
-				this.dataset.id
-				}`)
-				xmlhttp.send()
-			})
-		}
+		window.onload = () => { 
+			// let activate = document.querySelectorAll("[type=checkbox]") 
+			// console.log(activate)
+			// const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
+        	// 	searching: false,
+			// 	// fixedHeight: true,
+			// })
 
-		let btdeletes = document.querySelectorAll(".modal-trigger")
-		for (let btdelete of btdeletes) { // console.log(btdelete)
-			btdelete.addEventListener("click", function () {
+		
+			// const datatablesSimple = document.getElementById('datatablesSimple');
+			// if (datatablesSimple) {
+			// 	new simpleDatatables.DataTable(datatablesSimple, {
+			// 		firstLast: true,
+			// 		perPageSelect: [5, 10, 25, 50, 100]
+			// 	});
+			// 	console.log(simpleDatatables)
+			// }
+		
+			// références des pages
+			// const btnsPaginator = document.querySelectorAll(".dataTable-pagination-list")
+			// const allButons = btnsPaginator[0].children
+			// on boucle sur les pages
+			// for(let button of allButons)
+			// {
+			// 	button.addEventListener('click', e => {
+					// on récupère les données
+					// crud();
+					// console.log(e)
+					// console.log(e.delegateTarget.all)
+					// console.log(document.getElementById('datatablesSimple'))
 
-			document.querySelector(".modal-footer a").href = `/admin/post/delete/${
-			this.dataset.id
-			}`
-			document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${
-			this.dataset.title
-			}"`
-			})
-		}
+			// 	})
+			// }
+			// allButons.forEach(elementButton => {
+			// 	elementButton.addEventListener('click', e => {
+			// 		console.log('click');
+			// 	})
+			// });
+			// console.log(allEl)		
+			// document.querySelector(".pager").remove()
+			// console.log(allButons)
+		
+			function crud() 
+			{
+				// on récupère toutes les références des checkbox dans une liste
+				// 10 premiers nodes
+				let activate = document.querySelectorAll("[type=checkbox]") 
+				// console.log(activate)
+				for (let button of activate) { // déclanche une callback a chaque click
+						button.addEventListener("click", function () {
+						let xmlhttp = new XMLHttpRequest
+						xmlhttp.open("get", `/admin/post/activate/${
+						// recupere l'id de l'instance du checkbox qui aura été
+						this.dataset.id
+						}`)
+						xmlhttp.send()
+					})
+				}
+
+				let btdeletes = document.querySelectorAll(".modal-trigger")
+				for (let btdelete of btdeletes) { // console.log(btdelete)
+					btdelete.addEventListener("click", function () {
+
+					document.querySelector(".modal-footer a").href = `/admin/post/delete/${
+					this.dataset.id
+					}`
+					document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${
+					this.dataset.title
+					}"`
+					})
+				}
+			}	
+		
+		crud();
 	}
 </script>
 {% endblock %}
